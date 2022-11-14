@@ -1,0 +1,38 @@
+.heading{
+  background-color:#212529;
+  height: 90px;
+  color: white;
+  text-align: center;
+};
+.heading h1{
+ position: relative;
+ float:left;
+}
+.heading p { 
+  position:relative;
+  float: right;
+  right: 20px;
+  bottom: 40px;
+}
+.heading img { 
+  position: relative;
+  float: left;
+  margin: 15px 0px 0px 50px ;
+}
+.navbar {
+  width: 100%;
+  top: -6px;
+}
+footer {
+  text-align: center;
+  color: white;
+  background-color: #212529;
+}
+tbody a {
+  color: white;
+}
+.stateFilterClass {
+  position: relative;
+  float: right;
+  bottom: 30px;
+}
