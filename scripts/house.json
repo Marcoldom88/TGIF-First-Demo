@@ -1,15 +1,4 @@
-{
-   "status":"OK",
-   "copyright":" Copyright (c) 2022 Pro Publica Inc. All Rights Reserved.",
-   "results":[
-      {
-         "congress": "117",
-         "chamber": "House",
-         
-         
-         "num_results": 454,
-         "offset": 0,
-         "members": [
+ [
               {
                  "id": "A000370",
                  "title": "Representative",
@@ -21800,6 +21789,4 @@
                  "votes_against_party_pct": 3.97
                }
              ]
-      }
-   ]
-}
+ 

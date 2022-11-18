@@ -1,24 +1,78 @@
 
+
+
+
+//FETCH for data
 fetch("../scripts/senate.json")
   .then(function (response) {
     return response.json();
   })
   .then(function (senate) {
-    let placeholder = document.querySelector("#data-output");
-    let out = "";
-    for (let members of senate) {
+    buildTable(senate)
+    checkboxes.forEach(function (checkbox) { //CHECKBOX PARTY FILTER
+      checkbox.addEventListener('change', function () {
+        let enabledSettings = Array.from(checkboxes) // Convert checkboxes to an array to use filter and map.                              
+        .filter(i => i.checked) // Use Array.filter to remove unchecked checkboxes.                              
+        .map(i => i.value); // Use Array.map to extract only the checkbox values from the array of objects.
+        function makeFilterArray(members, enabledSettings) {
+          let filterarr = [];
+          members.forEach(members => {
+            if (enabledSettings.length !== 0) {
+              if (enabledSettings.includes(members.party)) {
+              filterarr.push(members);
+              } return buildTable(filterarr)
+            }
+          })
+        }
+        return makeFilterArray(senate, enabledSettings);
+      }); 
+    });
+    select.addEventListener("click", function (e) { // SELECT STATE FILTER
+      let stateSelected = e.target.value; // get option value from clicked option
+      function filterByState(members, stateSelected) {
+        let filterarr = [];
+        members.forEach(members => {
+            if (stateSelected.length !== 0) {
+              if (stateSelected.includes(members.state)) {
+              filterarr.push(members);
+              } return buildTable(filterarr)
+            } else {
+              return buildTable(senate);
+            }
+          })
+        }; 
+      return filterByState (senate, stateSelected)
+    });
+  }
+);
+// function for building Senate's table
+function buildTable(members) {
+   let out = "";
+    for (let member of members) {
       out += `
       <tr>
-        <td><a href="${members.url}">${members.first_name} ${members.last_name}</a></td>
-        <td>${members.party}</td>
-        <td>${members.state}</td>
-        <td>${members.seniority}</td>
-        <td>${members.votes_with_party_pct}</td>
+        <td><a href="${member.url}">${member.first_name} ${member.last_name}</a></td>
+        <td>${member.party}</td>
+        <td>${member.state}</td>
+        <td>${member.seniority}</td>
+        <td>${member.votes_with_party_pct}</td>
       </tr
       `;
     }
-    placeholder.innerHTML = out;
-  });
+    document.querySelector("#data-output").innerHTML = out;
+};
+//state's checkboxes
+let checkboxes = document.querySelectorAll("input:checked");
+
+//select state
+let select = document.getElementById("filterstates");
+
+const parties = {
+  D: 'Democrat',
+  R: 'Republican',
+  ID: 'Independent'
+}
+
 const states = {
   "AL": "Alabama",
   "AK": "Alaska",
@@ -80,8 +134,9 @@ const states = {
   "WI": "Wisconsin",
   "WY": "Wyoming"
 };
-    
-function buildDropdown(states){
+
+//function for creating the select list for states
+function buildDropdown(states) {
   const keyStates = Object.keys(states); //dentro del objeto solo nos quedamos con las claves que son las abreviaciones
   var selectmenu = document.getElementById('filterstates'); //nos traemos del html el elemento con id filterstates
   keyStates.forEach((key, index) => { //para cada key dentro de keyStates
@@ -91,9 +146,5 @@ function buildDropdown(states){
     selectmenu.appendChild(stateOptions);//añadimos elementos hijo de tipo option al select
   });
 };
+buildDropdown(states);
  
-  const parties = {
-  D: 'Democrat',
-  R: 'Republican',
-  ID: 'Independent'
-}

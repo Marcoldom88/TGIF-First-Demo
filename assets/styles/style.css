@@ -1,12 +1,14 @@
 .heading{
   background-color:#212529;
-  height: 90px;
+  height: 120px;
   color: white;
   text-align: center;
+  padding: 10px;
 };
 .heading h1{
  position: relative;
  float:left;
+ right: 50px;
 }
 .heading p { 
   position:relative;
@@ -15,18 +17,24 @@
   bottom: 40px;
 }
 .heading img { 
-  position: relative;
-  float: left;
-  margin: 15px 0px 0px 50px ;
+  position: absolute;
+  left: 25px;
+  top: 20px;
 }
 .navbar {
   width: 100%;
-  top: -6px;
+  margin-bottom: 50px;
 }
 footer {
   text-align: center;
   color: white;
   background-color: #212529;
+}
+table {
+  max-width: 1200px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 tbody a {
   color: white;
@@ -35,4 +43,16 @@ tbody a {
   position: relative;
   float: right;
   bottom: 30px;
+}
+article p {
+  text-align: justify;
+}
+
+.homeImage {
+ float: right;
+ width: 200px;
+ bottom: 100px;
+}
+.house {
+  display: none;
 }
