@@ -1,66 +1,3 @@
-
-
-
-
-//FETCH for data
-fetch("../scripts/senate.json")
-  .then(function (response) {
-    return response.json();
-  })
-  .then(function (senate) {
-    buildTable(senate)
-    checkboxes.forEach(function (checkbox) { //CHECKBOX PARTY FILTER
-      checkbox.addEventListener('change', function () {
-        let enabledSettings = Array.from(checkboxes) // Convert checkboxes to an array to use filter and map.                              
-        .filter(i => i.checked) // Use Array.filter to remove unchecked checkboxes.                              
-        .map(i => i.value); // Use Array.map to extract only the checkbox values from the array of objects.
-        function makeFilterArray(members, enabledSettings) {
-          let filterarr = [];
-          members.forEach(members => {
-            if (enabledSettings.length !== 0) {
-              if (enabledSettings.includes(members.party)) {
-              filterarr.push(members);
-              } return buildTable(filterarr)
-            }
-          })
-        }
-        return makeFilterArray(senate, enabledSettings);
-      }); 
-    });
-    select.addEventListener("click", function (e) { // SELECT STATE FILTER
-      let stateSelected = e.target.value; // get option value from clicked option
-      function filterByState(members, stateSelected) {
-        let filterarr = [];
-        members.forEach(members => {
-            if (stateSelected.length !== 0) {
-              if (stateSelected.includes(members.state)) {
-              filterarr.push(members);
-              } return buildTable(filterarr)
-            } else {
-              return buildTable(senate);
-            }
-          })
-        }; 
-      return filterByState (senate, stateSelected)
-    });
-  }
-);
-// function for building Senate's table
-function buildTable(members) {
-   let out = "";
-    for (let member of members) {
-      out += `
-      <tr>
-        <td><a href="${member.url}">${member.first_name} ${member.last_name}</a></td>
-        <td>${member.party}</td>
-        <td>${member.state}</td>
-        <td>${member.seniority}</td>
-        <td>${member.votes_with_party_pct}</td>
-      </tr
-      `;
-    }
-    document.querySelector("#data-output").innerHTML = out;
-};
 //state's checkboxes
 let checkboxes = document.querySelectorAll("input:checked");
 
@@ -134,6 +71,69 @@ const states = {
   "WI": "Wisconsin",
   "WY": "Wyoming"
 };
+
+
+
+//FETCH for data
+fetch("../scripts/senate.json")
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (senate) {
+    buildTable(senate)
+    checkboxes.forEach(function (checkbox) { //CHECKBOX PARTY FILTER
+      checkbox.addEventListener('change', function () {
+        let enabledSettings = Array.from(checkboxes) // Convert checkboxes to an array to use filter and map.                              
+        .filter(i => i.checked) // Use Array.filter to remove unchecked checkboxes.                              
+        .map(i => i.value); // Use Array.map to extract only the checkbox values from the array of objects.
+        function makeFilterArray(members, enabledSettings) {
+          let filterarr = [];
+          members.forEach(members => {
+            if (enabledSettings.length !== 0) {
+              if (enabledSettings.includes(members.party)) {
+              filterarr.push(members);
+              } return buildTable(filterarr)
+            }
+          })
+        }
+        return makeFilterArray(senate, enabledSettings);
+      }); 
+    });
+    select.addEventListener("click", function (e) { // SELECT STATE FILTER
+      let stateSelected = e.target.value; // get option value from clicked option
+      function filterByState(members, stateSelected) {
+        let filterarr = [];
+        members.forEach(members => {
+            if (stateSelected.length !== 0) {
+              if (stateSelected.includes(members.state)) {
+              filterarr.push(members);
+              } return buildTable(filterarr)
+            } else {
+              return buildTable(senate);
+            }
+          })
+        }; 
+      return filterByState (senate, stateSelected)
+    });
+  }
+);
+// function for building Senate's table
+function buildTable(members) {
+   let out = "";
+    for (let member of members) {
+      out += `
+      <tr>
+        <td><a href="${member.url}">${member.first_name} ${member.last_name}</a></td>
+        <td>${member.party}</td>
+        <td>${member.state}</td>
+        <td>${member.seniority}</td>
+        <td>${member.votes_with_party_pct}</td>
+      </tr
+      `;
+    }
+    document.querySelector("#data-output").innerHTML = out;
+};
+
 
 //function for creating the select list for states
 function buildDropdown(states) {
